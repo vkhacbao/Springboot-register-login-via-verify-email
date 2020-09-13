@@ -11,63 +11,69 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@Table(name = "confirmation_token")
 public class ConfirmationToken {
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-@Column(name="token_id")
-private long tokenid;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="token_id")
+	private long tokenid;
 
-@Column(name="confirmation_token")
-private String confirmationToken;
+	@Column(name="confirmation_token")
+	private String confirmationToken;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	
+	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
+	
+	
+	
+	public ConfirmationToken() {
+	}
+	
+	public ConfirmationToken(User user) {
+		this.user = user;
+		createdDate = new Date();
+		confirmationToken = UUID.randomUUID().toString();
+	}
 
-@Temporal(TemporalType.TIMESTAMP)
-private Date createdDate;
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
 
-@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-@JoinColumn(nullable = false, name = "user_id")
-private User user;
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
 
-public ConfirmationToken(User user) {
-this.user= user;
-createdDate = new Date(tokenid);
-confirmationToken = UUID.randomUUID().toString();
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-public long getTokenid() {
-	return tokenid;
-}
+	public User getUser() {
+		return user;
+	}
 
-public void setTokenid(long tokenid) {
-	this.tokenid = tokenid;
-}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-public String getConfirmationToken() {
-	return confirmationToken;
-}
+	public long getTokenid() {
+		return tokenid;
+	}
 
-public void setConfirmationToken(String confirmationToken) {
-	this.confirmationToken = confirmationToken;
-}
-
-public Date getCreatedDate() {
-	return createdDate;
-}
-
-public void setCreatedDate(Date createdDate) {
-	this.createdDate = createdDate;
-}
-
-public User getUser() {
-	return user;
-}
-
-public void setUser(User user) {
-	this.user = user;
-}
-
+	public void setTokenid(long tokenid) {
+		this.tokenid = tokenid;
+	}
 }
