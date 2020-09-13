@@ -1,7 +1,7 @@
 # Springboot-register-login-via-verify-email
 Before running the program, allow the server to access google account by: Accessing personal account ---> Security ---> Allow unsafe applications.                   
-http://localhost:3344/register                                                         
-http://localhost:3344/login
+http://localhost:8119/register                                                         
+http://localhost:8119/login
 
 # Register
 
